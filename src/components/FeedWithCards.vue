@@ -1,14 +1,15 @@
 <template>
 <div class="justify-content-center">
 <div v-for="memorial in memorials" :key="memorial" class="card" style="width: 18rem;">
-  <img class="card-img-top" :src="memorial.photo_file" alt="Card image cap">
+  <img class="card-img-top" :src="memorial.photo_file" alt="Card image cap" v-if="memorial.photo_file">
   <div class="card-body">
     <h5 class="card-title">{{ memorial.first_name }} {{ memorial.last_name }}</h5>
-    <p class="card-text">{{ memorial.birth_date }}</p>
-    <p class="card-text">{{ memorial.passing_date }}</p>
-    <p class="card-text">{{ memorial.location }}</p>
+    <p class="card-text" v-if="memorial.age">{{ memorial.age }}</p>
+    <p class="card-text" v-if="memorial.birth_date">{{ memorial.birth_date }}</p>
+    <p class="card-text" v-if="memorial.passing_date">{{ memorial.passing_date }}</p>
+    <p class="card-text" v-if="memorial.location">{{ memorial.location }}</p>
     <p class="card-text">{{ memorial.prompt }}</p>
-    <p class="card-text">{{ memorial.prompt_response }}</p>
+    <p class="card-text" v-if="memorial.prompt_response">{{ memorial.prompt_response }}</p>
   </div>
 </div>
 <b-pagination
