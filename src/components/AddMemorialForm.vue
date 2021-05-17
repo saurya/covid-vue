@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import locations from './json/locations.json'
 // TODO(saurya): Figure out why the columns aren't working
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Lay everything out correctly
@@ -108,7 +109,6 @@
 // TODO(saurya): Turn input fields into borderless beauties
 // TODO(saurya): Turn color of background of form to Arjun's choice
 var genders = [ "Male", "Female", "Third Gender" ]
-var locations = [ "Hyderabad, Telangana", "Mumbai, Maharashtra" ]
 export default {
   name: 'AddMemorialForm',
   props: {
