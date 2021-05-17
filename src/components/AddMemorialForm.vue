@@ -1,3 +1,5 @@
 <template>
-Add Memorial Form
+<div>
+  Add Memorial Form
+</div>
 </template>

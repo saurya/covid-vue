@@ -1,3 +1,5 @@
 <template>
-Explanation Header
+<div>
+  Explanation Header
+</div>
 </template>

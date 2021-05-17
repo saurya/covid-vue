@@ -1,3 +1,5 @@
 <template>
-Feed with Cards
+<div>
+  Feed with Cards
+</div>
 </template>
