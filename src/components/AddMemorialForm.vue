@@ -2,7 +2,7 @@
 <b-form id="addmemorialform" @submit="onSubmit" v-if="show">
             <div class="form-container">
               <h3 class="mb-3">Make a memorial for your loved one</h3>
-              <b-row>
+              <b-row class="justify-content-center">
                 <b-col cols="8" sm="4">
                   <b-form-group id="input-group-2" label="First Name" label-for="input-2">
                   <b-form-input
@@ -32,7 +32,7 @@
 
               </b-row>
       
-              <b-row>
+              <b-row class="justify-content-center">
                 <b-col cols="8" sm="4">
                   <b-form-group id="input-group-3" label="Last Name" label-for="input-3">
                   <b-form-input
@@ -49,14 +49,15 @@
                         >
                         <!-- Styled -->
                             <b-form-file
-                            v-model="file"
-                            :state="Boolean(file)"
-                            required
+                             type="image"
+                             accept="image/*"
+                             multiple
+                             @change="uploadFile" 
                             ></b-form-file>
                         </b-form-group>
                   </b-col>
               </b-row>
-              <b-row>
+              <b-row class="justify-content-center">
                   <b-col sm="4">
                     <b-form-group
                     label="Date of Birth"
@@ -72,7 +73,7 @@
                     </b-form-group>
                 </b-col>
               </b-row>
-              <b-row>
+              <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
                     label="Location"
@@ -90,26 +91,9 @@
                 </b-col>
 
               </b-row>
-              <b-row>
+              <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
-                  <b-form-group
-                    label="Tell the world something about your loved one"
-                  >
-                    <b-form-input 
-                      list="prompt-list"
-                      v-model="memorial.prompt"
-                      required
-                      :placeholder="$t('placeholdersMemorial.prompt')"
-                    ></b-form-input>
-                    <datalist id="prompt-list">
-                      <option v-for="prompt in prompts" :key="prompt">{{ prompt }}</option>
-                    </datalist>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-              <b-row>
-               <b-col cols="8" sm="8">
-                 <b-form-group label="Answer">
+                 <b-form-group label="More than anything else they loved...">
                     <b-form-textarea 
                       v-model="memorial.prompt_response"
                       required
@@ -119,18 +103,19 @@
                 </b-col>
               </b-row>
 
-            </div>
-            <b-row>
+            <b-row class="justify-content-center">
               <b-col sm="8">
-                <b-button type="submit"  class="mr-2 my-3" variant="success" block>SUBMIT AND MAKE A MEMORIAL</b-button>
+                <b-button type="submit" class="mr-2 my-3" variant="success" block>SUBMIT AND MAKE A MEMORIAL</b-button>
               </b-col>
             </b-row>
+            </div>
           </b-form>
 </template>
 
 <script>
 import locations from './json/locations.json'
 import prompts from './json/prompts.json'
+import axios from 'axios'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Center the form
@@ -156,9 +141,8 @@ export default {
           photo_upload: '',
           birth_date: '',
           passing_date: '',
-          email: '',
           location: '',
-          prompt: '',
+          prompt: 'More than anything else, they loved...',
           prompt_response: ''
         },
         locations: locations,
@@ -171,6 +155,20 @@ export default {
       }
     },
     methods: {
+        uploadFile (event) {
+          this.files = event.target.files
+        },
+        handleSubmit() {
+          const formData = new FormData();
+          for (const i of Object.keys(this.files)) {
+            formData.append('files', this.files[i])
+          }
+          axios.post('http://localhost:4000/api/file-upload', formData, {
+          }).then((res) => {
+            console.log(res)
+          })
+        },  
+
       async onSubmit(evt) {
         evt.preventDefault()
    /*

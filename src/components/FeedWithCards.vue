@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="justify-content-center">
 <div v-for="memorial in memorials" :key="memorial" class="card" style="width: 18rem;">
   <img class="card-img-top" :src="memorial.photo_file" alt="Card image cap">
   <div class="card-body">
