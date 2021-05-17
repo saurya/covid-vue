@@ -1,5 +1,5 @@
 <template>
-<b-form @submit="onSubmit" @reset="onReset" v-if="show">
+<b-form id="addmemorialform" @submit="onSubmit" @reset="onReset" v-if="show">
             <div class="form-container">
               <h3 class="mb-3">Your Details</h3>
               <b-form-row>
