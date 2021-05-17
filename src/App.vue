@@ -27,7 +27,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding: 8px;
+}
+button.btn {
+  border-radius: 30px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 </style>

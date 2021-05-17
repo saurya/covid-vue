@@ -1,10 +1,10 @@
 <template>
-<b-form id="addmemorialform" @submit="onSubmit" @reset="onReset" v-if="show">
+<b-form id="addmemorialform" @submit="onSubmit" v-if="show">
             <div class="form-container">
-              <h3 class="mb-3">Your Details</h3>
-              <b-form-row>
-                <b-col cols="12" sm="4">
-                  <b-form-group id="input-group-2" label="First Name*" label-for="input-2">
+              <h3 class="mb-3">Make a memorial for your loved one</h3>
+              <b-row>
+                <b-col cols="8" sm="4">
+                  <b-form-group id="input-group-2" label="First Name" label-for="input-2">
                   <b-form-input
                     id="input-2"
                     v-model="memorial.first_name"
@@ -13,48 +13,8 @@
                   ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col cols="12" sm="4">
-                  <b-form-group id="input-group-3" label="Last Name*" label-for="input-3">
-                  <b-form-input
-                    id="input-3"
-                    v-model="memorial.last_name"
-                    required
-                    :placeholder="$t('placeholdersMemorial.last_name')"
-                  ></b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-form-row>
-              <b-form-row>
-                  <b-col sm="4">
-                    <b-form-group
-                    label="Date of Birth"
-                    >
-                    <b-form-datepicker id="example-datepicker" v-model="memorial.birth_date" class="mb-2"></b-form-datepicker>
-                    </b-form-group>
-                </b-col>
-                <b-col sm="4">
-                    <b-form-group
-                    label="Date of Passing"
-                    >
-                    <b-form-datepicker id="passing-datepicker" v-model="memorial.passing_date" class="mb-2"></b-form-datepicker>
-                    </b-form-group>
-                </b-col>
-               <b-col cols="12" sm="4">
-                  <b-form-group
-                    label="Location"
-                  >
-                    <b-form-input 
-                      list="my-list-id-2"
-                      v-model="memorial.location"
-                      required
-                      :placeholder="$t('placeholdersMemorial.location')"
-                    ></b-form-input>
-                    <datalist id="my-list-id-2">
-                      <option v-for="location in locations" :key="location">{{ location }}</option>
-                    </datalist>
-                  </b-form-group>
-                </b-col>
-               <b-col cols="12" sm="4">
+
+               <b-col cols="8" sm="4">
                   <b-form-group
                     label="Gender"
                   >
@@ -70,9 +30,20 @@
                   </b-form-group>
                 </b-col>
 
-              </b-form-row>
-              <b-form-row>
-                  <b-col sm="8">
+              </b-row>
+      
+              <b-row>
+                <b-col cols="8" sm="4">
+                  <b-form-group id="input-group-3" label="Last Name" label-for="input-3">
+                  <b-form-input
+                    id="input-3"
+                    v-model="memorial.last_name"
+                    required
+                    :placeholder="$t('placeholdersMemorial.last_name')"
+                  ></b-form-input>
+                  </b-form-group>
+                </b-col>
+                  <b-col sm="4">
                       <b-form-group
                         label="Photo"
                         >
@@ -81,19 +52,77 @@
                             v-model="file"
                             :state="Boolean(file)"
                             required
-                            placeholder="Choose a file or drop it here..."
-                            drop-placeholder="Drop file here..."
                             ></b-form-file>
                         </b-form-group>
                   </b-col>
-              </b-form-row>
+              </b-row>
+              <b-row>
+                  <b-col sm="4">
+                    <b-form-group
+                    label="Date of Birth"
+                    >
+                    <b-form-datepicker id="birth-datepicker" v-model="memorial.birth_date" class="mb-2"></b-form-datepicker>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="4">
+                    <b-form-group
+                    label="Date of Passing"
+                    >
+                    <b-form-datepicker id="passing-datepicker" v-model="memorial.passing_date" class="mb-2"></b-form-datepicker>
+                    </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+               <b-col cols="8" sm="8">
+                  <b-form-group
+                    label="Location"
+                  >
+                    <b-form-input 
+                      list="my-list-id-2"
+                      v-model="memorial.location"
+                      required
+                      :placeholder="$t('placeholdersMemorial.location')"
+                    ></b-form-input>
+                    <datalist id="my-list-id-2">
+                      <option v-for="location in locations" :key="location">{{ location }}</option>
+                    </datalist>
+                  </b-form-group>
+                </b-col>
+
+              </b-row>
+              <b-row>
+               <b-col cols="8" sm="8">
+                  <b-form-group
+                    label="Tell the world something about your loved one"
+                  >
+                    <b-form-input 
+                      list="prompt-list"
+                      v-model="memorial.prompt"
+                      required
+                      :placeholder="$t('placeholdersMemorial.prompt')"
+                    ></b-form-input>
+                    <datalist id="prompt-list">
+                      <option v-for="prompt in prompts" :key="prompt">{{ prompt }}</option>
+                    </datalist>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row>
+               <b-col cols="8" sm="8">
+                 <b-form-group label="Answer">
+                    <b-form-textarea 
+                      v-model="memorial.prompt_response"
+                      required
+                      :placeholder="$t('placeholdersMemorial.prompt_response')"
+                    ></b-form-textarea>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
             </div>
             <b-row>
-              <b-col sm="4">
-                <b-button type="reset" class="mr-2 my-3"  variant="danger" block>Reset</b-button>
-              </b-col>
-              <b-col sm="4">
-                <b-button type="submit"  class="mr-2 my-3" variant="success" block>Submit</b-button>
+              <b-col sm="8">
+                <b-button type="submit"  class="mr-2 my-3" variant="success" block>SUBMIT AND MAKE A MEMORIAL</b-button>
               </b-col>
             </b-row>
           </b-form>
@@ -101,12 +130,11 @@
 
 <script>
 import locations from './json/locations.json'
-// TODO(saurya): Figure out why the columns aren't working
+import prompts from './json/prompts.json'
 // TODO(saurya): Add thumbnail image for Photos
-// TODO(saurya): Lay everything out correctly
 // TODO(saurya): Use Axios to hit the backend and submit this data
+// TODO(saurya): Center the form
 // TODO(saurya): Display success/continuation token to user somehow
-// TODO(saurya): Turn input fields into borderless beauties
 // TODO(saurya): Turn color of background of form to Arjun's choice
 var genders = [ "Male", "Female", "Third Gender" ]
 export default {
@@ -135,6 +163,7 @@ export default {
         },
         locations: locations,
         genders: genders,
+        prompts: prompts,
         show: true,
         showFailAlert: false,
         showSuccessAlert: false,
@@ -197,25 +226,28 @@ export default {
           this.show = false
           this.showFailAlert = true
         }*/
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        confirm("Are you sure you want to reset the form? You will lose all of your inputs.");
-        // Reset our form values
-        this.memorial.first_name = ''
-        this.memorial.last_name = ''
-        this.memorial.email = ''
-        // TODO(saurya): Finish resetting all the form fields
-        this.file = null
-        
-        this.showFailAlert = false
-        this.showSuccessAlert = false
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
       }
     }
 }
 </script>
+
+<style>
+legend,label {
+  text-align: left;
+}
+</style>
+<style scoped>
+.form-container {
+  padding: 2rem 2rem;
+  margin-bottom: 2rem;
+  background-color: #e9ecef;
+  border-radius: 0.3rem;
+}
+
+.form-control {
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  background-color: transparent;
+}
+</style>

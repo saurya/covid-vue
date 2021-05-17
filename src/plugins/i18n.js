@@ -10,8 +10,8 @@ var messages = {
             "birth_date" : "Mar 22 1960",
             "passing_date" : "Apr 24 2021",
             "location" : "Hyderabad, Telangana",
-            "prompt" : "One thing he loved most about life...",
-            "prompt_response" : "...was his family."
+            "prompt" : "More than anything else, they loved...",
+            "prompt_response" : "...their family."
         },
     }
 }
