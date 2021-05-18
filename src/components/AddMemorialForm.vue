@@ -49,7 +49,8 @@
                         >
                         <!-- Styled -->
                             <b-form-file
-                             type="image"
+                             class="form-control-file"
+                             type="file"
                              accept="image/*"
                              multiple
                              @change="uploadFile" 
@@ -118,10 +119,11 @@ import prompts from './json/prompts.json'
 import axios from 'axios'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
-// TODO(saurya): Center the form
 // TODO(saurya): Display success/continuation token to user somehow
 // TODO(saurya): Turn color of background of form to Arjun's choice
 var genders = [ "Male", "Female", "Third Gender" ]
+const SERVER = "localhost:8000"
+const ADD_MEMORIAL_URL_PATH = SERVER + '/add_memorial'
 export default {
   name: 'AddMemorialForm',
   props: {
