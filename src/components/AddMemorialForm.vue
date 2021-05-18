@@ -122,8 +122,8 @@ import axios from 'axios'
 // TODO(saurya): Display success/continuation token to user somehow
 // TODO(saurya): Turn color of background of form to Arjun's choice
 var genders = [ "Male", "Female", "Third Gender" ]
-const SERVER = "localhost:8000"
-const ADD_MEMORIAL_URL_PATH = SERVER + '/add_memorial'
+// const SERVER = "localhost:8000"
+// const ADD_MEMORIAL_URL_PATH = SERVER + '/add_memorial'
 export default {
   name: 'AddMemorialForm',
   props: {

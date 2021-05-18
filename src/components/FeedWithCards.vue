@@ -19,7 +19,7 @@
 
 <script>
 import axios from 'axios';
-const FETCH_MEMORIAL_API_PATH = 'https://covid-deaths-inda.uc.r.appspot.com/getmemorials';
+const FETCH_MEMORIAL_API_PATH = 'https://covid-deaths-inda.uc.r.appspot.com/json';
 
 export default {
   name: 'FeedWithCards',
@@ -43,7 +43,8 @@ export default {
     getMemorials(page) {
       axios.get(FETCH_MEMORIAL_API_PATH + page ? "/" + page : "")
         .then((res) => {
-          this.memorials = res.data['memorials']
+          this.memorials = res.data['landing_list']
+          this.pagination_token = res.data['pagination']
         })
         .catch((error) => {
           // eslint-disable-next-line

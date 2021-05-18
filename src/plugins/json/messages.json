@@ -1,0 +1,21 @@
+{    
+    "en": {
+       "explanation" : {
+            "jumbotron_header" : "COVID grief wall",
+            "jumbotron_lead" : "A place to mourn",
+            "project_summary_paragraph" : "We have all lost someone or know someone who has. Let's remember the ones we lost, the best we can.",
+            "make_a_memorial_button" : "MAKE A MEMORIAL"
+       },     
+       "placeholdersMemorial" : {
+            "first_name" : "Raghav",
+            "last_name" : "Rao",
+            "gender" : "Male",
+            "birth_date" : "Mar 22 1960",
+            "passing_date" : "Apr 24 2021",
+            "location" : "Hyderabad, Telangana",
+            "prompt" : "More than anything else, they loved...",
+            "prompt_response" : "...their family."
+        }
+    }
+}
+
