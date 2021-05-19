@@ -115,7 +115,6 @@
 
 <script>
 import locations from './json/locations.json'
-import axios from 'axios'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
@@ -157,14 +156,15 @@ export default {
           this.files = event.target.files
         },
         handleSubmit() {
+ /*
           const formData = new FormData();
           for (const i of Object.keys(this.files)) {
             formData.append('files', this.files[i])
           }
-          axios.post('http://localhost:4000/api/file-upload', formData, {
+          axios.post(FILE_UPLOAD_URL, formData, {
           }).then((res) => {
             console.log(res)
-          })
+          }) */
         },  
 
       async onSubmit(evt) {
@@ -177,16 +177,13 @@ export default {
         await db.collection("memorial").add({
             first_name: this.memorial.first_name,
             last_name: this.memorial.last_name,
-            email: this.memorial.email,
-            secondary_email: this.memorial.secondary_email,
-            university: this.memorial.university,
-            major: this.memorial.major,
-            education: this.memorial.education,
-            dob: this.memorial.date,
-            linkedin_url: this.memorial.linkedin_url,
-            file_name: this.file.name,
-            country: this.memorial.country,
-            create_time: Math.round(new Date().getTime()/1000)
+            gender: this.memorial.gender,
+            photo_upload: this.memorial.photo, 
+            birth_date: this.memorial.birth_date,
+            passing_date: this.memorial.passing_date,
+            location: this.memorial.location,
+            prompt: this.memorial.prompt,
+            prompt_response: this.memorial.prompt_response
           })
         .then(function(docRef) {
             user_doc_id = docRef.id
