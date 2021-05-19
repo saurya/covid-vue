@@ -25,7 +25,7 @@
                       :placeholder="$t('placeholdersMemorial.gender')"
                     ></b-form-input>
                     <datalist id="my-list-id-3">
-                      <option v-for="gender in genders" :key="gender">{{ gender }}</option>
+                      <option v-for="gender in $t('addMemorialForm.genders')" :key="gender">{{ gender }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>

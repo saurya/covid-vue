@@ -4,6 +4,7 @@
             "firstName" : "First Name",
             "lastName" : "Last Name",
             "gender" : "Gender",
+            "genders" : [ "Male", "Female", "Third Gender" ],
             "photo" : "Photo",
             "dateOfBirth" : "Date of Birth",
             "dateOfPassing" : "Date of Passing",
