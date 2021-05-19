@@ -50,136 +50,13 @@ export default {
         .then((res) => {
           this.memorials = res.data['landing_list']
           this.pagination_token = res.data['pagination']
+          this.totalMemorials = this.pagination_token['total']
+          this.perPage = this.pagination_token['per_page']
+          this.currentPage = this.pagination_token['page']
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
-          this.res = {
-  "landing_list": [
-    {
-      "age": 0,
-      "death_date": "Sat, 08 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Ranchi",
-      "is_active": 1,
-      "name": "Mritunjay Srivastava",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621340468_53390.jpg",
-      "province": "Jharkhand",
-      "uq_str": "1621340468_53390"
-    },
-    {
-      "age": 0,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Ranchi",
-      "is_active": 1,
-      "name": "Khwaja Mujahidudin ",
-      "photo_path": "",
-      "province": "Jharkhand",
-      "uq_str": "1621340385_31110"
-    },
-    {
-      "age": 0,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Ranchi",
-      "is_active": 1,
-      "name": "Sunil Kamal ",
-      "photo_path": "",
-      "province": "Jharkhand",
-      "uq_str": "1621340365_19557"
-    },
-    {
-      "age": 0,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Ranchi",
-      "is_active": 1,
-      "name": "Pankaj Prasad ",
-      "photo_path": "",
-      "province": "Jharkhand",
-      "uq_str": "1621340348_59226"
-    },
-    {
-      "age": 53,
-      "death_date": "Thu, 13 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Gulbarga",
-      "is_active": 1,
-      "name": "Jayatheerth Kagalkar ",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621332893_83039.jpg",
-      "province": "Karnataka",
-      "uq_str": "1621332893_83039"
-    },
-    {
-      "age": 58,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Chennai",
-      "is_active": 1,
-      "name": "Prabhu ",
-      "photo_path": "",
-      "province": "Tamil Nadu",
-      "uq_str": "1621332780_92765"
-    },
-    {
-      "age": 0,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Lucknow",
-      "is_active": 1,
-      "name": "Akhilesh Krishna Mohan ",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621332746_18693.jpg",
-      "province": "Uttar Pradesh",
-      "uq_str": "1621332746_18693"
-    },
-    {
-      "age": 65,
-      "death_date": "Sat, 01 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Bangalore Urban",
-      "is_active": 1,
-      "name": "Mahadeva Prakash ",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621332708_92310.jpg",
-      "province": "Karnataka",
-      "uq_str": "1621332708_92310"
-    },
-    {
-      "age": 47,
-      "death_date": "Sat, 15 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Erode",
-      "is_active": 1,
-      "name": "Chandrasekaran ",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621332620_5610.jpg",
-      "province": "Tamil Nadu",
-      "uq_str": "1621332620_5610"
-    },
-    {
-      "age": 58,
-      "death_date": "Sat, 15 May 2021 00:00:00 GMT",
-      "death_message": "",
-      "district": "Delhi",
-      "is_active": 1,
-      "name": "Sunil Jain",
-      "photo_path": "https://storage.googleapis.com/covid-india-grief/image_uploads/1621332504_29947.jpg",
-      "province": "Delhi",
-      "uq_str": "1621332504_29947"
-    }
-  ],
-  "memorial": {},
-  "pagination": {
-    "page": 1,
-    "per_page": 10,
-    "total": 25
-  },
-  "uq_str": ""
-};
-          this.memorials = this.res['landing_list']
-          this.pagination_token = this.res['pagination']
-          this.totalMemorials = this.pagination_token['total']
-          this.perPage = this.pagination_token['per_page']
-          this.currentPage = this.pagination_token['page']
         });
     },
     handlePageChange(value) {

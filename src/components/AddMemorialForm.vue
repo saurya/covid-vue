@@ -1,5 +1,5 @@
 <template>
-<b-form id="addmemorialform" @submit.prevent="onSubmit" v-if="show">
+<b-form id="addmemorialform" @submit.prevent="onSubmit" v-if="show" enctype="multipart/form-data">
             <div class="form-container">
               <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
               <b-row class="justify-content-center">
@@ -168,7 +168,9 @@ export default {
            death_message: this.$t('addMemorialForm.prompt') + this.memorial.prompt_response
         };
         var formData = new FormData();
-        formData.append("file", postable_memorial.file);
+        if (postable_memorial.file) {
+          formData.append("file", postable_memorial.file);
+        }
         formData.append("name", postable_memorial.name);
         formData.append("death_date", postable_memorial.death_date);
         formData.append("age", postable_memorial.age);
