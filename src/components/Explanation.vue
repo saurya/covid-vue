@@ -6,8 +6,8 @@
   </b-jumbotron>
   <div class="locale-changer">
     <select v-model="$i18n.locale">
-      <option v-for="(lang, i) in langs" :key="`Lang${i}`" :value="lang">
-        {{ lang }}
+      <option v-for="lang in langs" :key="lang.name" :value="lang.locale">
+        {{ lang.name }}
       </option>
     </select>
   </div>
@@ -18,7 +18,17 @@
 export default {
   name: 'locale-changer',
   data () {
-    return { langs: ['hi', 'bn', 'mr', 'pa', 'ta', 'ml', 'kn', 'gu', 'te', 'en'] }
+    return { langs: [
+                     { 'name': 'हिन्दी', 'locale' : 'hi' },
+                     { 'name': 'తెలుగు', 'locale' : 'te' },
+                     { 'name': 'বাংলা', 'locale' : 'bn' },
+                     { 'name': 'മലയാളം', 'locale' : 'ml' },
+                     { 'name': 'मराठी', 'locale' : 'mr' },
+                     { 'name': 'ਪੰਜਾਬੀ', 'locale' : 'pa' }, 
+                     { 'name': 'தமிழ்', 'locale': 'ta' } ,
+                     { 'name': 'ಕನ್ನಡ', 'locale' : 'kn' },
+                     { 'name': 'ગુજરાતી', 'locale' : 'gu' },
+                     { 'name': 'English', 'locale' : 'en' }] }
   }
 }
 </script>

@@ -1,0 +1,30 @@
+{
+       "addMemorialForm" : {
+            "formTitle" : "Make a memorial for your loved one",
+            "firstName" : "First Name",
+            "lastName" : "Last Name",
+            "gender" : "Gender",
+            "photo" : "Photo",
+            "dateOfBirth" : "Date of Birth",
+            "dateOfPassing" : "Date of Passing",
+            "location" : "Location",
+            "prompt" : "More than anything else, they loved...",
+            "submitAndMakeMemorial" : "SUBMIT AND MAKE A MEMORIAL"
+       },
+       "explanation" : {
+            "jumbotronHeader" : "COVID grief wall",
+            "jumbotronLead" : "A place to mourn",
+            "projectSummaryParagraph" : "We have all lost someone or know someone who has. Let's remember the ones we lost, the best we can.",
+            "makeAMemorialButton" : "MAKE A MEMORIAL"
+       },     
+       "placeholdersMemorial" : {
+            "first_name" : "Raghav",
+            "last_name" : "Rao",
+            "gender" : "Male",
+            "birth_date" : "Mar 22 1960",
+            "passing_date" : "Apr 24 2021",
+            "location" : "Hyderabad, Telangana",
+            "prompt" : "More than anything else, they loved...",
+            "prompt_response" : "...their family."
+        }
+}
