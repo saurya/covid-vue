@@ -1,10 +1,10 @@
 <template>
 <b-form id="addmemorialform" @submit="onSubmit" v-if="show">
             <div class="form-container">
-              <h3 class="mb-3">Make a memorial for your loved one</h3>
+              <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
               <b-row class="justify-content-center">
                 <b-col cols="8" sm="4">
-                  <b-form-group id="input-group-2" label="First Name" label-for="input-2">
+                  <b-form-group id="input-group-2" :label="$t('addMemorialForm.firstName')" label-for="input-2">
                   <b-form-input
                     id="input-2"
                     v-model="memorial.first_name"
@@ -16,7 +16,7 @@
 
                <b-col cols="8" sm="4">
                   <b-form-group
-                    label="Gender"
+                    :label="$t('addMemorialForm.gender')"
                   >
                     <b-form-input 
                       list="my-list-id-3"
@@ -34,7 +34,7 @@
       
               <b-row class="justify-content-center">
                 <b-col cols="8" sm="4">
-                  <b-form-group id="input-group-3" label="Last Name" label-for="input-3">
+                  <b-form-group id="input-group-3" :label="$t('addMemorialForm.lastName')" label-for="input-3">
                   <b-form-input
                     id="input-3"
                     v-model="memorial.last_name"
@@ -45,7 +45,7 @@
                 </b-col>
                   <b-col sm="4">
                       <b-form-group
-                        label="Photo"
+                        :label="$t('addMemorialForm.photo')"
                         >
                         <!-- Styled -->
                             <b-form-file
@@ -61,14 +61,14 @@
               <b-row class="justify-content-center">
                   <b-col sm="4">
                     <b-form-group
-                    label="Date of Birth"
+                    :label="$t('addMemorialForm.dateOfBirth')"
                     >
                     <b-form-datepicker id="birth-datepicker" v-model="memorial.birth_date" class="mb-2"></b-form-datepicker>
                     </b-form-group>
                 </b-col>
                 <b-col sm="4">
                     <b-form-group
-                    label="Date of Passing"
+                    :label="$t('addMemorialForm.dateOfPassing')"
                     >
                     <b-form-datepicker id="passing-datepicker" v-model="memorial.passing_date" class="mb-2"></b-form-datepicker>
                     </b-form-group>
@@ -77,7 +77,7 @@
               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
-                    label="Location"
+                    :label="$t('addMemorialForm.location')"
                   >
                     <b-form-input 
                       list="my-list-id-2"
@@ -94,7 +94,7 @@
               </b-row>
               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
-                 <b-form-group label="More than anything else they loved...">
+                 <b-form-group :label="$t('addMemorialForm.prompt')">
                     <b-form-textarea 
                       v-model="memorial.prompt_response"
                       required
@@ -106,7 +106,7 @@
 
             <b-row class="justify-content-center">
               <b-col sm="8">
-                <b-button type="submit" class="mr-2 my-3" variant="success" block>SUBMIT AND MAKE A MEMORIAL</b-button>
+                <b-button type="submit" class="mr-2 my-3" variant="success" block>{{ $t('addMemorialForm.submitAndMakeMemorial') }}</b-button>
               </b-col>
             </b-row>
             </div>
@@ -115,7 +115,6 @@
 
 <script>
 import locations from './json/locations.json'
-import prompts from './json/prompts.json'
 import axios from 'axios'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
@@ -149,7 +148,6 @@ export default {
         },
         locations: locations,
         genders: genders,
-        prompts: prompts,
         show: true,
         showFailAlert: false,
         showSuccessAlert: false,
