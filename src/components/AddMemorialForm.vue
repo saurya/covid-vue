@@ -1,5 +1,5 @@
 <template>
-<b-form id="addmemorialform" @submit="onSubmit" v-if="show">
+<b-form id="addmemorialform" @submit.prevent="onSubmit" v-if="show">
             <div class="form-container">
               <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
               <b-row class="justify-content-center">
@@ -70,7 +70,7 @@
                     <b-form-group
                     :label="$t('addMemorialForm.dateOfPassing')"
                     >
-                    <b-form-datepicker id="passing-datepicker" v-model="memorial.passing_date" class="mb-2"></b-form-datepicker>
+                    <b-form-datepicker id="passing-datepicker" required v-model="memorial.passing_date" class="mb-2"></b-form-datepicker>
                     </b-form-group>
                 </b-col>
               </b-row>
@@ -79,7 +79,7 @@
                   <b-form-group
                     :label="$t('addMemorialForm.location')"
                   >
-                    <b-form-input 
+                    <b-form-input
                       list="my-list-id-2"
                       v-model="memorial.location"
                       required
@@ -97,7 +97,6 @@
                  <b-form-group :label="$t('addMemorialForm.prompt')">
                     <b-form-textarea 
                       v-model="memorial.prompt_response"
-                      required
                       :placeholder="$t('placeholdersMemorial.prompt_response')"
                     ></b-form-textarea>
                   </b-form-group>
@@ -115,6 +114,7 @@
 
 <script>
 import locations from './json/locations.json'
+import moment from 'moment'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
@@ -141,7 +141,6 @@ export default {
           birth_date: '',
           passing_date: '',
           location: '',
-          prompt: 'More than anything else, they loved...',
           prompt_response: ''
         },
         locations: locations,
@@ -167,58 +166,28 @@ export default {
           }) */
         },  
 
-      async onSubmit(evt) {
-        evt.preventDefault()
-   /*
-        var user_doc_id = null
-        var submit_success = true
-        this.formShow = false
-        this.showProgressBar = true
-        await db.collection("memorial").add({
-            first_name: this.memorial.first_name,
-            last_name: this.memorial.last_name,
-            gender: this.memorial.gender,
-            photo_upload: this.memorial.photo, 
-            birth_date: this.memorial.birth_date,
-            passing_date: this.memorial.passing_date,
-            location: this.memorial.location,
-            prompt: this.memorial.prompt,
-            prompt_response: this.memorial.prompt_response
-          })
-        .then(function(docRef) {
-            user_doc_id = docRef.id
-            submit_success = submit_success && true
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-          submit_success = submit_success && false
-        });
-        var storageRef = storage.ref('memorials/'+ user_doc_id + '/' + this.file.name);
-        var self = this
-        await storageRef.put(this.file).on('state_changed',
-            function progress(snapshot) {
-                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                self.value = percentage
-            },
-            function error(error) {
-                self.showProgressBar = false
-                console.error("Error adding document: ", error);
-                submit_success = submit_success && false
-            },
-            function complete() {
-                self.showProgressBar = false
-                console.log('Uploaded a blob or file!')
-                submit_success = submit_success && true
-            }
-        )
-        
-        if (submit_success) {
-          this.show = false
-          this.showSuccessAlert = true
-        } else {
-          this.show = false
-          this.showFailAlert = true
-        }*/
+      async onSubmit() {
+        var postable_memorial = {
+           name: this.memorial.first_name + ' ' + this.memorial.last_name,
+           death_date: this.memorial.passing_date,
+           age: moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years'),
+           location: this.memorial.location,
+           province: this.memorial.location.split('::')[0],
+           district: this.memorial.location.split('::')[1],
+           death_message: this.$t('addMemorialForm.prompt') + this.memorial.prompt_response
+        };
+        this.$root.$emit('addMemorialMessage', postable_memorial);
+
+        this.memorial =  {
+          first_name: '',
+          last_name: '',
+          gender: '',
+          photo_upload: '',
+          birth_date: '',
+          passing_date: '',
+          location: '',
+          prompt_response: ''
+        }
       }
     }
 }
