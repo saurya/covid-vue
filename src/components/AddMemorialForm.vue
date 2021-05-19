@@ -120,7 +120,6 @@ import axios from 'axios'
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
 // TODO(saurya): Turn color of background of form to Arjun's choice
-var genders = [ "Male", "Female", "Third Gender" ]
 // const SERVER = "localhost:8000"
 // const ADD_MEMORIAL_URL_PATH = SERVER + '/add_memorial'
 export default {
@@ -147,7 +146,6 @@ export default {
           prompt_response: ''
         },
         locations: locations,
-        genders: genders,
         show: true,
         showFailAlert: false,
         showSuccessAlert: false,
