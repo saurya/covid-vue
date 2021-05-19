@@ -50,10 +50,11 @@
                         <!-- Styled -->
                             <b-form-file
                              class="form-control-file"
+                             ref="fileupload"
                              type="file"
+                             @change="handleFileUpload($event)"
+                             name="file"
                              accept="image/*"
-                             multiple
-                             @change="uploadFile" 
                             ></b-form-file>
                         </b-form-group>
                   </b-col>
@@ -115,12 +116,12 @@
 <script>
 import locations from './json/locations.json'
 import moment from 'moment'
+import axios from 'axios'
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
 // TODO(saurya): Turn color of background of form to Arjun's choice
-// const SERVER = "localhost:8000"
-// const ADD_MEMORIAL_URL_PATH = SERVER + '/add_memorial'
+
 export default {
   name: 'AddMemorialForm',
   props: {
@@ -138,6 +139,7 @@ export default {
           last_name: '',
           gender: '',
           photo_upload: '',
+          photo_base64: '',
           birth_date: '',
           passing_date: '',
           location: '',
@@ -151,21 +153,9 @@ export default {
       }
     },
     methods: {
-        uploadFile (event) {
-          this.files = event.target.files
-        },
-        handleSubmit() {
- /*
-          const formData = new FormData();
-          for (const i of Object.keys(this.files)) {
-            formData.append('files', this.files[i])
-          }
-          axios.post(FILE_UPLOAD_URL, formData, {
-          }).then((res) => {
-            console.log(res)
-          }) */
-        },  
-
+      handleFileUpload(event) {
+        this.memorial.photo_upload = event.target.files[0]
+      },
       async onSubmit() {
         var postable_memorial = {
            name: this.memorial.first_name + ' ' + this.memorial.last_name,
@@ -174,20 +164,48 @@ export default {
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
            district: this.memorial.location.split('::')[1],
+           file: this.memorial.photo_upload, 
            death_message: this.$t('addMemorialForm.prompt') + this.memorial.prompt_response
         };
-        this.$root.$emit('addMemorialMessage', postable_memorial);
+        var formData = new FormData();
+        formData.append("file", postable_memorial.file);
+        formData.append("name", postable_memorial.name);
+        formData.append("death_date", postable_memorial.death_date);
+        formData.append("age", postable_memorial.age);
+        formData.append("location", postable_memorial.location);
+        formData.append("death_message", postable_memorial.death_message);
 
-        this.memorial =  {
-          first_name: '',
-          last_name: '',
-          gender: '',
-          photo_upload: '',
-          birth_date: '',
-          passing_date: '',
-          location: '',
-          prompt_response: ''
-        }
+        axios.post('/', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(() => {
+          var reader = new FileReader()
+          var callback = function() {
+             this.$root.$emit('addMemorialMessage', postable_memorial);
+          }.bind(this) 
+          reader.onload = function() {
+             postable_memorial.photo_path = reader.result
+             callback();
+          }
+          reader.readAsDataURL(postable_memorial.file)
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        }).finally(() => {
+          this.$refs.fileupload.value = null;
+          this.memorial =  {
+            first_name: '',
+            last_name: '',
+            gender: '',
+            photo_upload: '',
+            birth_date: '',
+            passing_date: '',
+            location: '',
+            prompt_response: ''
+          }
+        });
       }
     }
 }
