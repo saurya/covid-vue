@@ -1,5 +1,4 @@
-{    
-    "en": {
+{
        "addMemorialForm" : {
             "formTitle" : "Make a memorial for your loved one",
             "firstName" : "First Name",
@@ -28,6 +27,4 @@
             "prompt" : "More than anything else, they loved...",
             "prompt_response" : "...their family."
         }
-    }
 }
-
