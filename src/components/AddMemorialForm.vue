@@ -160,22 +160,22 @@ export default {
         var postable_memorial = {
            name: this.memorial.first_name + ' ' + this.memorial.last_name,
            death_date: this.memorial.passing_date,
-           age: moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years'),
+           age: this.memorial.passing_date && this.memorial.birth_date ? moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') : "",
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
            district: this.memorial.location.split('::')[1],
            file: this.memorial.photo_upload, 
-           death_message: this.$t('addMemorialForm.prompt') + this.memorial.prompt_response
+           death_message: this.memorial.prompt_reseponse ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
         };
         var formData = new FormData();
-        if (postable_memorial.file) {
-          formData.append("file", postable_memorial.file);
-        }
+        formData.append("file", postable_memorial.file);
         formData.append("name", postable_memorial.name);
         formData.append("death_date", postable_memorial.death_date);
-        formData.append("age", postable_memorial.age);
+        if (!isNaN(postable_memorial.age)) {
+          formData.append("age", postable_memorial.age);
+        }
         formData.append("location", postable_memorial.location);
-        formData.append("death_message", postable_memorial.death_message);
+        formData.append("message", postable_memorial.death_message);
 
         axios.post('/', formData, {
             headers: {
