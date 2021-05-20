@@ -164,7 +164,7 @@ export default {
       },
       async onSubmit() {
         var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
-        var postable_memorial = {
+        this.postable_memorial = {
            name: this.memorial.name,
            death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
            location: this.memorial.location,
@@ -175,31 +175,32 @@ export default {
            death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
         };
         var formData = new FormData();
-        formData.append("file", postable_memorial.file);
-        formData.append("name", postable_memorial.name);
-        formData.append("age", postable_memorial.age);
-        formData.append("death_date", postable_memorial.death_date);
-        formData.append("location", postable_memorial.location);
-        formData.append("message", postable_memorial.death_message);
+        formData.append("file", this.postable_memorial.file);
+        formData.append("name", this.postable_memorial.name);
+        formData.append("age", this.postable_memorial.age);
+        formData.append("death_date", this.postable_memorial.death_date);
+        formData.append("location", this.postable_memorial.location);
+        formData.append("message", this.postable_memorial.death_message);
         formData.append("locale", this.$i18n.locale);
 
-        axios.post('/json', formData, {
+        axios.post('/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
-          postable_memorial.id = res['memorial_id']
-          var callback = function() {
-             this.$root.$emit('addMemorialMessage', postable_memorial);
-          }.bind(this) 
+          this.postable_memorial.id = res.data['uq_str']
+          this.postable_memorial.permalink = '/' + '?memorial_id=' + this.postable_memorial.id
+          var callback = () => {
+             this.$root.$emit('addMemorialMessage', this.postable_memorial);
+          }
 
-          if (postable_memorial.file) {
+          if (this.postable_memorial.file) {
             var reader = new FileReader()
             reader.onload = function() {
-               postable_memorial.photo_path = reader.result
+               this.postable_memorial.photo_path = reader.result
                callback()
             }
-            reader.readAsDataURL(postable_memorial.file)
+            reader.readAsDataURL(this.postable_memorial.file)
           } else {
             callback()
           }

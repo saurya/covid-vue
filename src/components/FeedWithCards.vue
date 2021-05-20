@@ -5,7 +5,7 @@
     <img class="card-img-top" :src="memorial.photo_path" alt="Card image cap" v-if="memorial.photo_path">
   </div>
   <div class="card-body">
-    <h5 class="card-title">{{ memorial.name }}</h5>
+    <h5 class="card-title"><a :href="memorial.permalink">{{ memorial.name }}</a></h5>
     <p class="card-text" v-if="memorial.age">{{ memorial.age }}</p>
     <p class="card-text" v-if="memorial.birth_date">{{ memorial.birth_date | moment('DD/MM/YYYY') }}</p>
     <p class="card-text" v-if="memorial.death_date">{{ memorial.death_date | moment('DD/MM/YYYY') }}</p>
