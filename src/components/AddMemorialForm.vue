@@ -183,7 +183,7 @@ export default {
         formData.append("message", this.postable_memorial.death_message);
         formData.append("locale", this.$i18n.locale);
 
-        axios.post('/', formData, {
+        axios.post('/json', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
