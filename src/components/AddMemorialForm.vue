@@ -117,6 +117,8 @@
 import locations from './json/locations.json'
 import moment from 'moment'
 import axios from 'axios'
+var HARDCODED_FALLBACK_DATE = '2021-05-01'
+var HARDCODED_FALLBACK_AGE = 0
 // TODO(saurya): Add thumbnail image for Photos
 // TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
@@ -160,11 +162,11 @@ export default {
         var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
         var postable_memorial = {
            name: this.memorial.first_name + ' ' + this.memorial.last_name,
-           death_date: this.memorial.passing_date,
+           death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
            district: this.memorial.location.split('::')[1],
-           age: isNaN(age) ? 0 : age,
+           age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
            file: this.memorial.photo_upload, 
            death_message: this.memorial.prompt_response ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
         };
