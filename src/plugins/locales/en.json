@@ -8,6 +8,7 @@
             "dateOfBirth" : "Date of Birth",
             "dateOfPassing" : "Date of Passing",
             "location" : "Location",
+            "prompt" : "Tell us something about your loved one",
             "prompts" : [ "More than anything else, they loved..." ],
             "submitAndMakeMemorial" : "SUBMIT AND MAKE A MEMORIAL"
        },
@@ -23,6 +24,7 @@
             "birth_date" : "Mar 22 1960",
             "passing_date" : "Apr 24 2021",
             "location" : "Hyderabad, Telangana",
+            "prompt" : "More than anything else, they loved...",
             "prompt_response" : "...their family."
         },
        "locations" : 

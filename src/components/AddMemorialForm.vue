@@ -84,8 +84,23 @@
 
               </b-row>
               <b-row class="justify-content-center">
+                <b-col cols="8">
+                  <b-form-group :label="$t('addMemorialForm.prompt')"
+                  >
+                    <b-form-input 
+                      list="my-list-id-4"
+                      v-model="memorial.prompt"
+                      :placeholder="$t('placeholdersMemorial.prompt')"
+                    ></b-form-input>
+                    <datalist id="my-list-id-4">
+                      <option v-for="prompt in $t('addMemorialForm.prompts')" :key="prompt">{{ prompt }}</option>
+                    </datalist>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+              <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
-                 <b-form-group :label="$t('addMemorialForm.prompts')">
+                 <b-form-group>
                     <b-form-textarea 
                       v-model="memorial.prompt_response"
                       :placeholder="$t('placeholdersMemorial.prompt_response')"
@@ -134,6 +149,7 @@ export default {
           birth_date: '',
           passing_date: '',
           location: '',
+          prompt: '',
           prompt_response: ''
         },
         show: true,
@@ -156,7 +172,7 @@ export default {
            district: this.memorial.location.split('::')[1],
            age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
            file: this.memorial.photo_upload, 
-           death_message: this.memorial.prompt_response ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
+           death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
         };
         var formData = new FormData();
         formData.append("file", postable_memorial.file);
