@@ -164,17 +164,15 @@ export default {
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
            district: this.memorial.location.split('::')[1],
+           age: isNaN(age) ? 0 : age,
            file: this.memorial.photo_upload, 
-           death_message: this.memorial.prompt_reseponse ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
+           death_message: this.memorial.prompt_response ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
         };
-        if (!isNaN(age)) {
-          postable_memorial.age = age
-        }
         var formData = new FormData();
         formData.append("file", postable_memorial.file);
         formData.append("name", postable_memorial.name);
-        formData.append("death_date", postable_memorial.death_date);
         formData.append("age", postable_memorial.age);
+        formData.append("death_date", postable_memorial.death_date);
         formData.append("location", postable_memorial.location);
         formData.append("message", postable_memorial.death_message);
 
