@@ -1,6 +1,6 @@
 <template>
 <div class="mx-auto" id="memorial-container">
-<div v-for="(memorial, i) in memorials" :key="i" class="card mx-auto" style="width: 18rem;">
+<div v-for="(memorial, i) in memorials" :key="i" class="card mx-auto" v-bind:class="{ 'alert-primary': memorial.is_highlighted, 'alert-danger': memorial.is_not_found, 'alert-warning': memorial.is_under_review }" style="width: 18rem;">
   <div class="img-square-wrapper">
     <img class="card-img-top" :src="memorial.photo_path" alt="Card image cap" v-if="memorial.photo_path">
   </div>
@@ -50,6 +50,7 @@ export default {
       axios.get(page_path)
         .then((res) => {
           this.memorials = res.data['landing_list']
+          this.highlighted_memorial = res.data['memorial']
           this.pagination_token = res.data['pagination']
           this.totalMemorials = this.pagination_token['total']
           this.perPage = this.pagination_token['per_page']
@@ -64,12 +65,14 @@ export default {
       this.getMemorials(value)
     }
   },
+  prependAndHighlightMemorial(memorial) {
+    memorial.is_highlighted = true
+    this.memorials.unshift(memorial)
+    document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
+  },
   created() {
     this.getMemorials(0);
-    this.$root.$on('addMemorialMessage', (memorial) => {
-      this.memorials.unshift(memorial)
-      document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
-    });
+    this.$root.$on('addMemorialMessage', this.prependAndHighlightMemorial);
   },
 };
 </script>

@@ -188,6 +188,7 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         }).then((res) => {
+          postable_memorial.id = res['memorial_id']
           var callback = function() {
              this.$root.$emit('addMemorialMessage', postable_memorial);
           }.bind(this) 
