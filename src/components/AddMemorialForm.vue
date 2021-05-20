@@ -157,23 +157,24 @@ export default {
         this.memorial.photo_upload = event.target.files[0]
       },
       async onSubmit() {
+        var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
         var postable_memorial = {
            name: this.memorial.first_name + ' ' + this.memorial.last_name,
            death_date: this.memorial.passing_date,
-           age: this.memorial.passing_date && this.memorial.birth_date ? moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') : "",
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
            district: this.memorial.location.split('::')[1],
            file: this.memorial.photo_upload, 
            death_message: this.memorial.prompt_reseponse ? this.$t('addMemorialForm.prompt') + this.memorial.prompt_response : ""
         };
+        if (!isNaN(age)) {
+          postable_memorial.age = age
+        }
         var formData = new FormData();
         formData.append("file", postable_memorial.file);
         formData.append("name", postable_memorial.name);
         formData.append("death_date", postable_memorial.death_date);
-        if (!isNaN(postable_memorial.age)) {
-          formData.append("age", postable_memorial.age);
-        }
+        formData.append("age", postable_memorial.age);
         formData.append("location", postable_memorial.location);
         formData.append("message", postable_memorial.death_message);
 
