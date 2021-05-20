@@ -183,11 +183,11 @@ export default {
         formData.append("message", postable_memorial.death_message);
         formData.append("locale", this.$i18n.locale);
 
-        axios.post('/', formData, {
+        axios.post('/json', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        }).then(() => {
+        }).then((res) => {
           var callback = function() {
              this.$root.$emit('addMemorialMessage', postable_memorial);
           }.bind(this) 
