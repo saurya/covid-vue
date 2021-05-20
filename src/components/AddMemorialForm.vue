@@ -202,7 +202,7 @@ export default {
           // eslint-disable-next-line
          console.error(error);
         }).finally(() => {
-          this.$refs.fileupload.value = null;
+          this.$refs.fileupload.reset()
           this.memorial =  {
             first_name: '',
             last_name: '',
