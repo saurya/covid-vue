@@ -44,6 +44,7 @@
                              @change="handleFileUpload($event)"
                              name="file"
                              accept="image/*"
+                             plain
                             ></b-form-file>
                         </b-form-group>
                   </b-col>
@@ -93,7 +94,6 @@
                 </b-col>
               </b-row>
             <b-row>
-              <b-col class="alert alert-info"></b-col>
             </b-row>
             <b-row class="justify-content-center">
               <b-col sm="8">
