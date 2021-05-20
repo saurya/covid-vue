@@ -46,6 +46,7 @@ export default {
       if (page >= 1) {
         page_path = page_path + "/" + page
       }
+      page_path = page_path + "?locale=" + this.$i18n.locale
       axios.get(page_path)
         .then((res) => {
           this.memorials = res.data['landing_list']

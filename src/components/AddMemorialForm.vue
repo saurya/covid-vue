@@ -3,25 +3,27 @@
             <div class="form-container">
               <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
               <b-row class="justify-content-center">
-                <b-col cols="8" sm="4">
-                  <b-form-group id="input-group-2" :label="$t('addMemorialForm.firstName')" label-for="input-2">
+                <b-col cols="8">
+                  <b-form-group id="input-group-2" :label="$t('addMemorialForm.name')" label-for="input-2">
                   <b-form-input
                     id="input-2"
-                    v-model="memorial.first_name"
+                    v-model="memorial.name"
                     required
-                    :placeholder="$t('placeholdersMemorial.first_name')"
+                    :placeholder="$t('placeholdersMemorial.name')"
                   ></b-form-input>
                   </b-form-group>
                 </b-col>
 
-               <b-col cols="8" sm="4">
+              </b-row>
+      
+              <b-row class="justify-content-center">
+                <b-col cols="8" sm="4">
                   <b-form-group
                     :label="$t('addMemorialForm.gender')"
                   >
                     <b-form-input 
                       list="my-list-id-3"
                       v-model="memorial.gender"
-                      required
                       :placeholder="$t('placeholdersMemorial.gender')"
                     ></b-form-input>
                     <datalist id="my-list-id-3">
@@ -30,20 +32,7 @@
                   </b-form-group>
                 </b-col>
 
-              </b-row>
-      
-              <b-row class="justify-content-center">
-                <b-col cols="8" sm="4">
-                  <b-form-group id="input-group-3" :label="$t('addMemorialForm.lastName')" label-for="input-3">
-                  <b-form-input
-                    id="input-3"
-                    v-model="memorial.last_name"
-                    required
-                    :placeholder="$t('placeholdersMemorial.last_name')"
-                  ></b-form-input>
-                  </b-form-group>
-                </b-col>
-                  <b-col sm="4">
+                 <b-col sm="4">
                       <b-form-group
                         :label="$t('addMemorialForm.photo')"
                         >
@@ -87,7 +76,7 @@
                       :placeholder="$t('placeholdersMemorial.location')"
                     ></b-form-input>
                     <datalist id="my-list-id-2">
-                      <option v-for="location in locations" :key="location">{{ location }}</option>
+                      <option v-for="location in $t('locations')" :key="location">{{ location }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>
@@ -95,7 +84,7 @@
               </b-row>
               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
-                 <b-form-group :label="$t('addMemorialForm.prompt')">
+                 <b-form-group :label="$t('addMemorialForm.prompts')">
                     <b-form-textarea 
                       v-model="memorial.prompt_response"
                       :placeholder="$t('placeholdersMemorial.prompt_response')"
@@ -103,7 +92,9 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-
+            <b-row>
+              <b-col class="alert alert-info"></b-col>
+            </b-row>
             <b-row class="justify-content-center">
               <b-col sm="8">
                 <b-button type="submit" class="mr-2 my-3" variant="success" block>{{ $t('addMemorialForm.submitAndMakeMemorial') }}</b-button>
@@ -114,7 +105,6 @@
 </template>
 
 <script>
-import locations from './json/locations.json'
 import moment from 'moment'
 import axios from 'axios'
 var HARDCODED_FALLBACK_DATE = '2021-05-01'
@@ -137,8 +127,7 @@ export default {
         max: 100,
         terms: 0,
         memorial: {
-          first_name: '',
-          last_name: '',
+          name: '',
           gender: '',
           photo_upload: '',
           photo_base64: '',
@@ -147,7 +136,6 @@ export default {
           location: '',
           prompt_response: ''
         },
-        locations: locations,
         show: true,
         showFailAlert: false,
         showSuccessAlert: false,
@@ -161,7 +149,7 @@ export default {
       async onSubmit() {
         var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
         var postable_memorial = {
-           name: this.memorial.first_name + ' ' + this.memorial.last_name,
+           name: this.memorial.name,
            death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
            location: this.memorial.location,
            province: this.memorial.location.split('::')[0],
@@ -177,6 +165,7 @@ export default {
         formData.append("death_date", postable_memorial.death_date);
         formData.append("location", postable_memorial.location);
         formData.append("message", postable_memorial.death_message);
+        formData.append("locale", this.$i18n.locale);
 
         axios.post('/', formData, {
             headers: {
@@ -204,8 +193,7 @@ export default {
         }).finally(() => {
           this.$refs.fileupload.reset()
           this.memorial =  {
-            first_name: '',
-            last_name: '',
+            name: '',
             gender: '',
             photo_upload: '',
             birth_date: '',
