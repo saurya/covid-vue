@@ -1,6 +1,6 @@
 <template>
 <div class="mx-auto" id="memorial-container">
-<div v-for="(memorial, i) in memorials" :key="i" class="card mx-auto" style="width: 28rem;">
+<div v-for="(memorial, i) in memorials" :key="i" class="card mx-auto" style="width: 18rem;">
   <div class="img-square-wrapper">
     <img class="card-img-top" :src="memorial.photo_path" alt="Card image cap" v-if="memorial.photo_path">
   </div>

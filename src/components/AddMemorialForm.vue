@@ -183,19 +183,24 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(() => {
-          var reader = new FileReader()
           var callback = function() {
              this.$root.$emit('addMemorialMessage', postable_memorial);
           }.bind(this) 
-          reader.onload = function() {
-             postable_memorial.photo_path = reader.result
-             callback();
+
+          if (postable_memorial.file) {
+            var reader = new FileReader()
+            reader.onload = function() {
+               postable_memorial.photo_path = reader.result
+               callback()
+            }
+            reader.readAsDataURL(postable_memorial.file)
+          } else {
+            callback()
           }
-          reader.readAsDataURL(postable_memorial.file)
         })
         .catch((error) => {
           // eslint-disable-next-line
-          console.error(error);
+         console.error(error);
         }).finally(() => {
           this.$refs.fileupload.value = null;
           this.memorial =  {
