@@ -56,7 +56,7 @@ export default {
         .then((res) => {
           this.memorials = res.data['landing_list']
           if (res.data['memorial']) {
-            this.prependAndHighlightMemorial(res.data['memorial'], res.data['memorial_status'])
+            this.prependAndHighlightMemorial(res.data['memorial'].memorial_data, res.data['memorial'].status)
           }
           this.pagination_token = res.data['pagination']
           this.totalMemorials = this.pagination_token['total']
@@ -71,21 +71,22 @@ export default {
     handlePageChange(value) {
       this.getMemorials(value)
       this.scrollToTopOfMemorialContainer()
-    }
-  },
-  scrollToTopOfMemorialContainer() {
-    document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
-  },
-  prependAndHighlightMemorial(memorial, memorial_status) {
-    if (memorial_status == "MEMORIAL_FOUND") {
-      memorial.is_highlighted = true
-    } else if (memorial_status == "MEMORIAL_NOT_FOUND") {
-      memorial.is_not_found = true
-    } else if (memorial_status == "MEMORIAL_UNDER_REVIEW") {
-      memorial.is_under_review = true
-    }
-    this.memorials.unshift(memorial)
-    this.scrollToTopOfMemorialContainer()
+    },
+    scrollToTopOfMemorialContainer() {
+      document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
+    },
+    prependAndHighlightMemorial(memorial, memorial_status) {
+      if (memorial_status == 200) {
+        memorial.is_highlighted = true
+      } else if (memorial_status == 404) {
+        memorial.is_not_found = true
+      } else if (memorial_status == 201) {
+        memorial.is_under_review = true
+      }
+      this.memorials.unshift(memorial)
+      this.scrollToTopOfMemorialContainer()
+    },
+
   },
   created() {
     this.getMemorials(0);
