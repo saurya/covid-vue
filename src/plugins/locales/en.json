@@ -3,7 +3,7 @@
             "formTitle" : "Make a memorial for your loved one",
             "name" : "Name",
             "gender" : "Gender",
-            "genders" : [ "Male", "Female", "Third Gender" ],
+            "genders" : [ "Male", "Female", "Transgender", "Other", "Prefer not to say" ],
             "photo" : "Photo",
             "dateOfBirth" : "Date of Birth",
             "dateOfPassing" : "Date of Passing",
@@ -19,11 +19,11 @@
             "makeAMemorialButton" : "MAKE A MEMORIAL"
        },     
        "placeholdersMemorial" : {
-            "name" : "Raghav",
+            "name" : "Kishore Kumar",
             "gender" : "Male",
             "birth_date" : "Mar 22 1960",
             "passing_date" : "Apr 24 2021",
-            "location" : "Hyderabad, Telangana",
+            "location" : "Andhra Pradesh::Hyderabad",
             "prompt" : "More than anything else, they loved...",
             "prompt_response" : "...their family."
         },

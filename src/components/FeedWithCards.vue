@@ -70,7 +70,11 @@ export default {
     },
     handlePageChange(value) {
       this.getMemorials(value)
+      this.scrollToTopOfMemorialContainer()
     }
+  },
+  scrollToTopOfMemorialContainer() {
+    document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
   },
   prependAndHighlightMemorial(memorial, memorial_status) {
     if (memorial_status == "MEMORIAL_FOUND") {
@@ -81,7 +85,7 @@ export default {
       memorial.is_under_review = true
     }
     this.memorials.unshift(memorial)
-    document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
+    this.scrollToTopOfMemorialContainer()
   },
   created() {
     this.getMemorials(0);
