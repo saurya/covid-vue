@@ -47,10 +47,17 @@ export default {
         page_path = page_path + "/" + page
       }
       page_path = page_path + "?locale=" + this.$i18n.locale
+      const urlParams = new URLSearchParams(window.location.search);
+      const memorial_id = urlParams.get('show_memorial');
+      if (memorial_id) {
+        page_path = page_path + "&memorial_id=" + memorial_id 
+      }
       axios.get(page_path)
         .then((res) => {
           this.memorials = res.data['landing_list']
-          this.highlighted_memorial = res.data['memorial']
+          if (res.data['memorial']) {
+            this.prependAndHighlightMemorial(res.data['memorial'], res.data['memorial_status'])
+          }
           this.pagination_token = res.data['pagination']
           this.totalMemorials = this.pagination_token['total']
           this.perPage = this.pagination_token['per_page']
@@ -65,8 +72,14 @@ export default {
       this.getMemorials(value)
     }
   },
-  prependAndHighlightMemorial(memorial) {
-    memorial.is_highlighted = true
+  prependAndHighlightMemorial(memorial, memorial_status) {
+    if (memorial_status == "MEMORIAL_FOUND") {
+      memorial.is_highlighted = true
+    } else if (memorial_status == "MEMORIAL_NOT_FOUND") {
+      memorial.is_not_found = true
+    } else if (memorial_status == "MEMORIAL_UNDER_REVIEW") {
+      memorial.is_under_review = true
+    }
     this.memorials.unshift(memorial)
     document.getElementById('memorial-container').scrollIntoView({ behavior: 'smooth' })
   },
