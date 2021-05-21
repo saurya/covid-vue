@@ -1,5 +1,5 @@
 <template>
-<b-form id="addmemorialform" @submit.prevent="onSubmit" v-if="show" enctype="multipart/form-data">
+<b-form id="addmemorialform" @submit.prevent="onSubmit" enctype="multipart/form-data">
             <div class="form-container">
               <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
               <b-row class="justify-content-center">
@@ -117,6 +117,8 @@
             </b-row>
             </div>
           </b-form>
+
+          
 </template>
 
 <script>
@@ -152,11 +154,13 @@ export default {
           prompt: '',
           prompt_response: ''
         },
-        show: true,
-        showFailAlert: false,
-        showSuccessAlert: false,
-        showProgressBar: false,
+        memorial_response: {},
       }
+    },
+    watch: {
+      memorial_response: function() {
+        // this.$bvToast.toast('my-toast', { noAutoHide: true, solid: true })
+      },
     },
     methods: {
       handleFileUpload(event) {
@@ -204,11 +208,12 @@ export default {
           } else {
             callback()
           }
+
         })
         .catch((error) => {
           // eslint-disable-next-line
          console.error(error);
-       }).finally(() => {
+       }).finally((response) => {
           this.$refs.fileupload.reset()
           this.memorial =  {
             name: '',
@@ -219,6 +224,7 @@ export default {
             location: '',
             prompt_response: ''
           }
+          this.memorial_response = response
         });
       }
     }
