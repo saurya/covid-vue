@@ -208,22 +208,6 @@ export default {
         .catch((error) => {
           // eslint-disable-next-line
          console.error(error);
-          this.postable_memorial.id = 'fartdick'
-          this.postable_memorial.permalink = '/' + '?memorial_id=' + this.postable_memorial.id
-          var callback = () => {
-             this.$root.$emit('addMemorialMessage', this.postable_memorial);
-          }
-
-          if (this.postable_memorial.file) {
-            var reader = new FileReader()
-            reader.onload = function() {
-               this.postable_memorial.photo_path = reader.result
-               callback()
-            }
-            reader.readAsDataURL(this.postable_memorial.file)
-          } else {
-            callback()
-          }
        }).finally(() => {
           this.$refs.fileupload.reset()
           this.memorial =  {
