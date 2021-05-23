@@ -14,7 +14,11 @@
             "submissionSuccessfulToastTitle": "Your submission was successful",
             "submissionSuccessfulToastContent": "Thank you for telling us of your loved one. Once your submission has been reviewed, it will be available at the link below.",
             "submissionFailedToastTitle": "Sorry, something went wrong",
-            "submissionFailedToastTitle": "We couldn't accept your submission at this time, please try again another time."
+            "submissionFailedToastContent": "We couldn't accept your submission at this time, please try again another time."
+       },
+       "feed" : {
+            "memorialNotFound": "Memorial Not Found",
+            "memorialUnderReview": "Your Memorial Is Under Review"
        },
        "explanation" : {
             "jumbotronHeader" : "COVID grief wall",

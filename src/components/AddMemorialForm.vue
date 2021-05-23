@@ -116,7 +116,8 @@
               </b-col>
             </b-row>
             </div>
-   <b-toast id="my-toast" variant="warning" class="initially-hidden" no-auto-hide toast-class="initially-hidden" title="Your form submission was successful">
+   <b-toast id="my-toast" variant="warning" class="initially-hidden" no-auto-hide toast-class="initially-hidden" :title="submission_response">
+        {{submission_details}}
     </b-toast>
           </b-form>
 
@@ -129,9 +130,7 @@ import axios from 'axios'
 var HARDCODED_FALLBACK_DATE = '2021-05-01'
 var HARDCODED_FALLBACK_AGE = 0
 // TODO(saurya): Add thumbnail image for Photos
-// TODO(saurya): Use Axios to hit the backend and submit this data
 // TODO(saurya): Display success/continuation token to user somehow
-// TODO(saurya): Turn color of background of form to Arjun's choice
 
 export default {
   name: 'AddMemorialForm',
@@ -157,7 +156,10 @@ export default {
           prompt_response: ''
         },
         memorial_response: {},
-        show: true
+        show: true,
+        submission_response: "",
+        submission_details: ""
+
       }
     },
     methods: {
@@ -192,10 +194,14 @@ export default {
         }).then((res) => {
           this.postable_memorial.id = res.data['uq_str']
           this.postable_memorial.permalink = '/' + '?show_memorial=' + this.postable_memorial.id
+          this.submission_response = this.$t('addMemorialForm.submissionSuccessfulToastTitle')
+          this.submission_details = this.$t('addMemorialForm.submissionSuccessfulToastContent')
         })
         .catch((error) => {
           // eslint-disable-next-line
          console.error(error);
+         this.submission_response = this.$t('addMemorialForm.submissionFailedToastTitle')
+         this.submission_details = this.$t('addMemorialForm.submissionFailedToastContent')
        }).finally((response) => {
           this.$refs.fileupload.reset()
           this.memorial =  {
@@ -208,12 +214,14 @@ export default {
             prompt_response: ''
           }
           this.memorial_response = response
+        
+          // FUCKME(saurya): This is all a horrible hack around this bug: https://github.com/bootstrap-vue/bootstrap-vue/pull/6362          // May God have mercy on my soul.
           this.$bvToast.show('my-toast')
           window.setTimeout(
           () => {
- document.getElementById('my-toast').classList.add('show')
- document.getElementById('my-toast').classList.add('show-real')
-  }, 500)
+                 document.getElementById('my-toast').classList.add('show')
+                 document.getElementById('my-toast').classList.add('show-real')
+                }, 500)
         });
       }
     }
@@ -230,6 +238,10 @@ legend,label {
 }
 #my-toast.initially-hidden.show-real {
   opacity: 1;
+}
+.close {
+  position: absolute;
+  right: 5px;
 }
 </style>
 <style scoped>
