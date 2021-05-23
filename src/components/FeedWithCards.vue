@@ -43,6 +43,16 @@ export default {
     };
   },
   methods: {
+    handleResponse(res) {
+      this.memorials = res.data['landing_list']
+      this.pagination_token = res.data['pagination']
+      this.totalMemorials = this.pagination_token['total']
+      this.perPage = this.pagination_token['per_page']
+      this.currentPage = this.pagination_token['page']
+      if (res.data['memorial'] && res.data['memorial']['status']) {
+        this.prependAndHighlightMemorial(res.data['memorial'].memorial_data, res.data['memorial'].status)
+      }
+    },
     getMemorials(page) {
       var page_path = FETCH_MEMORIAL_API_PATH;
       if (page >= 1) {
@@ -56,14 +66,7 @@ export default {
       }
       axios.get(page_path)
         .then((res) => {
-          this.memorials = res.data['landing_list']
-          this.pagination_token = res.data['pagination']
-          this.totalMemorials = this.pagination_token['total']
-          this.perPage = this.pagination_token['per_page']
-          this.currentPage = this.pagination_token['page']
-          if (res.data['memorial'] && res.data['memorial']['status']) {
-            this.prependAndHighlightMemorial(res.data['memorial'].memorial_data, res.data['memorial'].status)
-          }
+          this.handleResponse(res)
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -93,7 +96,7 @@ export default {
 
   },
   created() {
-    this.getMemorials(0);
+    handleResponse("(% initial_load %)") 
   },
 };
 </script>
