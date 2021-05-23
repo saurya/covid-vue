@@ -116,6 +116,8 @@
               </b-col>
             </b-row>
             </div>
+   <b-toast id="my-toast" variant="warning" class="initially-hidden" no-auto-hide toast-class="initially-hidden" title="Your form submission was successful">
+    </b-toast>
           </b-form>
 
           
@@ -155,12 +157,8 @@ export default {
           prompt_response: ''
         },
         memorial_response: {},
+        show: true
       }
-    },
-    watch: {
-      memorial_response: function() {
-        // this.$bvToast.toast('my-toast', { noAutoHide: true, solid: true })
-      },
     },
     methods: {
       handleFileUpload(event) {
@@ -194,21 +192,6 @@ export default {
         }).then((res) => {
           this.postable_memorial.id = res.data['uq_str']
           this.postable_memorial.permalink = '/' + '?show_memorial=' + this.postable_memorial.id
-          var callback = () => {
-             this.$root.$emit('addMemorialMessage', this.postable_memorial);
-          }
-
-          if (this.postable_memorial.file) {
-            var reader = new FileReader()
-            reader.onload = function() {
-               this.postable_memorial.photo_path = reader.result
-               callback()
-            }
-            reader.readAsDataURL(this.postable_memorial.file)
-          } else {
-            callback()
-          }
-
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -225,6 +208,12 @@ export default {
             prompt_response: ''
           }
           this.memorial_response = response
+          this.$bvToast.show('my-toast')
+          window.setTimeout(
+          () => {
+ document.getElementById('my-toast').classList.add('show')
+ document.getElementById('my-toast').classList.add('show-real')
+  }, 500)
         });
       }
     }
@@ -234,6 +223,13 @@ export default {
 <style>
 legend,label {
   text-align: left;
+}
+
+#my-toast.initially-hidden {
+  opacity: 0;
+}
+#my-toast.initially-hidden.show-real {
+  opacity: 1;
 }
 </style>
 <style scoped>
@@ -250,4 +246,5 @@ legend,label {
   border-right: 0px;
   background-color: transparent;
 }
+
 </style>

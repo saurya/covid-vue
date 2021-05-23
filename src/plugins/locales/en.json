@@ -10,7 +10,11 @@
             "location" : "Location",
             "prompt" : "Tell us something about your loved one",
             "prompts" : [ "More than anything else, they loved..." ],
-            "submitAndMakeMemorial" : "SUBMIT AND MAKE A MEMORIAL"
+            "submitAndMakeMemorial" : "SUBMIT AND MAKE A MEMORIAL",
+            "submissionSuccessfulToastTitle": "Your submission was successful",
+            "submissionSuccessfulToastContent": "Thank you for telling us of your loved one. Once your submission has been reviewed, it will be available at the link below.",
+            "submissionFailedToastTitle": "Sorry, something went wrong",
+            "submissionFailedToastTitle": "We couldn't accept your submission at this time, please try again another time."
        },
        "explanation" : {
             "jumbotronHeader" : "COVID grief wall",
