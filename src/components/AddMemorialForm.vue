@@ -2,7 +2,23 @@
 <b-form id="addmemorialform" @submit.prevent="onSubmit" enctype="multipart/form-data">
             <div class="form-container">
               <h3 class="mb-3">{{ $t("addMemorialForm.formTitle") }}</h3>
-              <b-row class="justify-content-center">
+               <b-row class="justify-content-center">
+               <b-col cols="8" sm="8">
+                 <b-form-group>
+                    <b-form-select
+                       v-model="$i18n.locale"
+                       class="locale-changer"
+                    >
+      <option v-for="lang in langs" :key="lang.name" :value="lang.locale">
+        {{ lang.name }}
+      </option>
+
+
+                    </b-form-select>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+             <b-row class="justify-content-center">
                 <b-col cols="8">
                   <b-form-group id="input-group-2" :label="$t('addMemorialForm.name')" label-for="input-2">
                   <b-form-input
@@ -158,7 +174,18 @@ export default {
         memorial_response: {},
         show: true,
         submission_response: "",
-        submission_details: ""
+        submission_details: "",
+         langs: [
+                     { 'name': 'हिन्दी', 'locale' : 'hi' },
+                     { 'name': 'తెలుగు', 'locale' : 'te' },
+                     { 'name': 'বাংলা', 'locale' : 'bn' },
+                     { 'name': 'മലയാളം', 'locale' : 'ml' },
+                     { 'name': 'मराठी', 'locale' : 'mr' },
+                     { 'name': 'ਪੰਜਾਬੀ', 'locale' : 'pa' }, 
+                     { 'name': 'தமிழ்', 'locale': 'ta' } ,
+                     { 'name': 'ಕನ್ನಡ', 'locale' : 'kn' },
+                     { 'name': 'ગુજરાતી', 'locale' : 'gu' },
+                     { 'name': 'English', 'locale' : 'en' }] 
 
       }
     },

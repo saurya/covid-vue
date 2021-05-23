@@ -96,7 +96,7 @@ export default {
 
   },
   created() {
-    handleResponse("(% initial_load %)") 
+    this.handleResponse("(% initial_load %)") 
   },
 };
 </script>
