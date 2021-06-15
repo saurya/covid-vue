@@ -81,23 +81,22 @@
                     </b-form-group>
                 </b-col>
               </b-row>
-              <b-row class="justify-content-center">
+               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
-                    :label="$t('addMemorialForm.location')"
+                    :label="$t('addMemorialForm.location1')"
                   >
                     <b-form-input
                       list="my-list-id-2"
-                      v-model="memorial.location"
+                      v-model="memorial.location1"
                       required
                       :placeholder="$t('placeholdersMemorial.location')"
                     ></b-form-input>
                     <datalist id="my-list-id-2">
-                      <option v-for="location in $t('locations')" :key="location">{{ location }}</option>
+                      <option v-for="location in $t('locations')" :key="location">{{ location.state }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>
-
               </b-row>
               <b-row class="justify-content-center">
                 <b-col cols="8">
