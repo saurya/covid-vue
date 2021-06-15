@@ -285,5 +285,17 @@ legend,label {
   border-right: 0px;
   background-color: transparent;
 }
+.locale-changer {
+  background-color: #058b48;
+  border-radius: 2.0rem;
+  border: white;
+  color : white;
+  padding: 10px 32px;
+  text-align: center;
+  font-size: 18px;
+  display: inline-block;
+  height: 40px;
+  
+}
 
 </style>
