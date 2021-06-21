@@ -81,22 +81,45 @@
                     </b-form-group>
                 </b-col>
               </b-row>
-               <b-row class="justify-content-center">
+              <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
                     :label="$t('addMemorialForm.location1')"
                   >
                     <b-form-input
                       list="my-list-id-2"
+                      
                       v-model="memorial.location1"
                       required
-                      :placeholder="$t('placeholdersMemorial.location')"
+                      :placeholder="$t('placeholdersMemorial.location1')"
                     ></b-form-input>
-                    <datalist id="my-list-id-2">
+                    <datalist id="my-list-id-2" >
                       <option v-for="location in $t('locations')" :key="location">{{ location.state }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>
+                </b-row>
+              <b-row class="justify-content-center">
+               <b-col cols="8" sm="8">
+                  <b-form-group
+                    :label="$t('addMemorialForm.location2')"
+                  >
+                    <b-form-input
+                      list="my-list-id-2b"
+                      v-model="memorial.location2"
+                      required
+                      :placeholder="$t('placeholdersMemorial.location2')"
+                   ></b-form-input>
+              <datalist id="my-list-id-2b">
+        <option v-for="district in availableDistricts" :key="district">{{district}}</option>
+   </datalist>
+                  </b-form-group>
+                </b-col>
+
+                
+              
+              
+
               </b-row>
               <b-row class="justify-content-center">
                 <b-col cols="8">
@@ -154,6 +177,7 @@ export default {
   },
   data() {
       return {
+      
         name: '',
         file: null,
         value: 0,
@@ -185,10 +209,12 @@ export default {
                      { 'name': 'ಕನ್ನಡ', 'locale' : 'kn' },
                      { 'name': 'ગુજરાતી', 'locale' : 'gu' },
                      { 'name': 'English', 'locale' : 'en' }] 
-
+        
       }
     },
-    methods: {
+    methods:{
+    
+    
       handleFileUpload(event) {
         this.memorial.photo_upload = event.target.files[0]
       },
@@ -249,9 +275,21 @@ export default {
                  document.getElementById('my-toast').classList.add('show-real')
                 }, 500)
         });
+        },
+  },
+   computed: {
+    availableDistricts () {
+      if (this.memorial.location1) {
+        const selectedState = this.$t('locations').find(loc => loc.state === this.memorial.location1);
+        return selectedState.districts;
+      } else {
+        return [];
       }
     }
-}
+  },
+ 
+};
+ 
 </script>
 
 <style>
@@ -284,5 +322,18 @@ legend,label {
   border-right: 0px;
   background-color: transparent;
 }
+.locale-changer {
+  background-color: #058b48;
+  border-radius: 2.0rem;
+  border: white;
+  color : white;
+  padding: 10px 32px;
+  text-align: center;
+  font-size: 18px;
+  display: inline-block;
+  height: 40px;
+  
+}
 
 </style>
+
