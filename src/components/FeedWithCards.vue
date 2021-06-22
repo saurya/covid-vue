@@ -28,7 +28,7 @@
 
 <script>
 import axios from 'axios';
-
+import landing_list from '.src\plugins\locales\en.json';
 const FETCH_MEMORIAL_API_PATH = '/json';
 
 export default {
