@@ -84,41 +84,19 @@
               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
-                    :label="$t('addMemorialForm.location1')"
+                    :label="$t('addMemorialForm.location')"
                   >
                     <b-form-input
                       list="my-list-id-2"
-                      
-                      v-model="memorial.location1"
+                      v-model="memorial.location"
                       required
-                      :placeholder="$t('placeholdersMemorial.location1')"
+                      :placeholder="$t('placeholdersMemorial.location')"
                     ></b-form-input>
-                    <datalist id="my-list-id-2" >
-                      <option v-for="location in $t('locations')" :key="location">{{ location.state }}</option>
+                    <datalist id="my-list-id-2">
+                      <option v-for="location in $t('locations')" :key="location">{{ location }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>
-                </b-row>
-              <b-row class="justify-content-center">
-               <b-col cols="8" sm="8">
-                  <b-form-group
-                    :label="$t('addMemorialForm.location2')"
-                  >
-                    <b-form-input
-                      list="my-list-id-2b"
-                      v-model="memorial.location2"
-                      required
-                      :placeholder="$t('placeholdersMemorial.location2')"
-                   ></b-form-input>
-              <datalist id="my-list-id-2b">
-        <option v-for="district in availableDistricts" :key="district">{{district}}</option>
-   </datalist>
-                  </b-form-group>
-                </b-col>
-
-                
-              
-              
 
               </b-row>
               <b-row class="justify-content-center">
@@ -177,7 +155,6 @@ export default {
   },
   data() {
       return {
-      
         name: '',
         file: null,
         value: 0,
@@ -209,27 +186,49 @@ export default {
                      { 'name': 'ಕನ್ನಡ', 'locale' : 'kn' },
                      { 'name': 'ગુજરાતી', 'locale' : 'gu' },
                      { 'name': 'English', 'locale' : 'en' }] 
-        
+
       }
     },
-    methods:{
-    
-    
+    methods:  {
       handleFileUpload(event) {
         this.memorial.photo_upload = event.target.files[0]
       },
+      test()
+            {
+                this.memorial = {
+                    name: 'kevin smith',
+                    gender: 'male',
+                    photo_upload: 'no',
+                    photo_base64: 'nan',
+                    birth_date: '25-11-1954',
+                    passing_date: '25-11-2020',
+                    location: 'jaipur::rajasthan',
+                    prompt: 'none',
+                    prompt_response: 'none'
+                }
+                let testValue=this.makePostableMemorial();
+            },
+      
+      makePostableMemorial()
+            {
+                let age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years')
+                this.postable_memorial = {
+
+                    name: this.memorial.name,
+                    death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
+                    location: this.memorial.location,
+                    province: this.memorial.location.split('::')[0],
+                    district: this.memorial.location.split('::')[1],
+                    age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
+                    file: this.memorial.photo_upload,
+                    death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
+                };
+                return this.postable_memorial;
+            },
+      
       async onSubmit() {
-        var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
-        this.postable_memorial = {
-           name: this.memorial.name,
-           death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
-           location: this.memorial.location,
-           province: this.memorial.location.split('::')[0],
-           district: this.memorial.location.split('::')[1],
-           age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
-           file: this.memorial.photo_upload, 
-           death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
-        };
+        
+        this.makePostableMemorial();
         var formData = new FormData();
         formData.append("file", this.postable_memorial.file);
         formData.append("name", this.postable_memorial.name);
@@ -275,21 +274,13 @@ export default {
                  document.getElementById('my-toast').classList.add('show-real')
                 }, 500)
         });
-        },
-  },
-   computed: {
-    availableDistricts () {
-      if (this.memorial.location1) {
-        const selectedState = this.$t('locations').find(loc => loc.state === this.memorial.location1);
-        return selectedState.districts;
-      } else {
-        return [];
-      }
+      },
+       
+      
     }
-  },
- 
-};
- 
+}
+
+
 </script>
 
 <style>
@@ -322,18 +313,5 @@ legend,label {
   border-right: 0px;
   background-color: transparent;
 }
-.locale-changer {
-  background-color: #058b48;
-  border-radius: 2.0rem;
-  border: white;
-  color : white;
-  padding: 10px 32px;
-  text-align: center;
-  font-size: 18px;
-  display: inline-block;
-  height: 40px;
-  
-}
 
 </style>
-
