@@ -189,22 +189,46 @@ export default {
 
       }
     },
-    methods: {
+    methods:  {
       handleFileUpload(event) {
         this.memorial.photo_upload = event.target.files[0]
       },
+      test()
+            {
+                this.memorial = {
+                    name: 'kevin smith',
+                    gender: 'male',
+                    photo_upload: 'no',
+                    photo_base64: 'nan',
+                    birth_date: '25-11-1954',
+                    passing_date: '25-11-2020',
+                    location: 'jaipur::rajasthan',
+                    prompt: 'none',
+                    prompt_response: 'none'
+                }
+                let testValue=this.makePostableMemorial();
+            },
+      
+      makePostableMemorial()
+            {
+                let age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years')
+                this.postable_memorial = {
+
+                    name: this.memorial.name,
+                    death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
+                    location: this.memorial.location,
+                    province: this.memorial.location.split('::')[0],
+                    district: this.memorial.location.split('::')[1],
+                    age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
+                    file: this.memorial.photo_upload,
+                    death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
+                };
+                return this.postable_memorial;
+            },
+      
       async onSubmit() {
-        var age = moment(this.memorial.passing_date).diff(moment(this.memorial.birth_date), 'years') 
-        this.postable_memorial = {
-           name: this.memorial.name,
-           death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
-           location: this.memorial.location,
-           province: this.memorial.location.split('::')[0],
-           district: this.memorial.location.split('::')[1],
-           age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
-           file: this.memorial.photo_upload, 
-           death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
-        };
+        
+        this.makePostableMemorial();
         var formData = new FormData();
         formData.append("file", this.postable_memorial.file);
         formData.append("name", this.postable_memorial.name);
@@ -250,9 +274,13 @@ export default {
                  document.getElementById('my-toast').classList.add('show-real')
                 }, 500)
         });
-      }
+      },
+       
+      
     }
 }
+
+
 </script>
 
 <style>
