@@ -84,19 +84,37 @@
               <b-row class="justify-content-center">
                <b-col cols="8" sm="8">
                   <b-form-group
-                    :label="$t('addMemorialForm.location')"
+                    :label="$t('addMemorialForm.locationState')"
                   >
                     <b-form-input
                       list="my-list-id-2"
-                      v-model="memorial.location"
+                      v-model="memorial.locationState"
                       required
-                      :placeholder="$t('placeholdersMemorial.location')"
+                      :placeholder="$t('placeholdersMemorial.locationState')"
                     ></b-form-input>
                     <datalist id="my-list-id-2">
-                      <option v-for="location in $t('locations')" :key="location">{{ location }}</option>
+                      <option v-for="location in $t('locations')" :key="location">{{ location.state }}</option>
                     </datalist>
                   </b-form-group>
                 </b-col>
+                 </b-row>
+                 <b-row class="justify-content-center">
+           <b-col cols="8" sm="8">
+              <b-form-group
+                :label="$t('addMemorialForm.locationDistrict')"
+              >
+                <b-form-input
+                  list="my-list-id-2b"
+                  v-model="memorial.locationDistrict"
+                   
+                  required
+                  :placeholder="$t('placeholdersMemorial.locationDistrict')"
+                ></b-form-input>
+                 <datalist id="my-list-id-2b">
+                <option v-for="district in Districtslists" :key="district">{{district}}</option>
+                </datalist>
+              </b-form-group>
+            </b-col>
 
               </b-row>
               <b-row class="justify-content-center">
@@ -198,9 +216,9 @@ export default {
         this.postable_memorial = {
            name: this.memorial.name,
            death_date: this.memorial.passing_date ? this.memorial.passing_date : HARDCODED_FALLBACK_DATE,
-           location: this.memorial.location,
-           province: this.memorial.location.split('::')[0],
-           district: this.memorial.location.split('::')[1],
+           location: this.memorial.locationState+"::"+this.memorial.locationDistrict,
+           province: this.memorial.locationState,
+           district: this.memorial.locationDistrict,
            age: isNaN(age) ? HARDCODED_FALLBACK_AGE : age,
            file: this.memorial.photo_upload, 
            death_message: this.memorial.prompt_response ? this.memorial.prompt + this.memorial.prompt_response : ""
@@ -250,9 +268,21 @@ export default {
                  document.getElementById('my-toast').classList.add('show-real')
                 }, 500)
         });
+        
+      },
+    },
+       computed: {
+    Districtslists () {
+      if (this.memorial.locationState) {
+        const selectedState = this.$t('locations').find(loc => loc.state === this.memorial.locationState);
+        return selectedState.districts;
+      } else {
+        return [];
       }
     }
-}
+  },
+ 
+};
 </script>
 
 <style>
